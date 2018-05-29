@@ -14,7 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -24,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create'); 
     }
 
     /**
@@ -35,7 +36,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // echo $request->title;
+        $this->validate($request, [
+            'title' => 'required|min:3',
+            'content' => 'required|min:10'
+        ]);
+        Post::create([
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+        return redirect(route('post.index')); 
     }
 
     /**
@@ -46,7 +56,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
