@@ -14,9 +14,11 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        //$posts = Post::all();
+        //Load in descending order
+        $posts = Post::orderBy('id', 'desc')->paginate(10);
         return view('posts.index', ['posts' => $posts]);
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +47,7 @@ class PostController extends Controller
             'title' => $request->title,
             'content' => $request->content
         ]);
-        return redirect(route('post.index')); 
+        return redirect(route('posts.index')); 
     }
 
     /**
